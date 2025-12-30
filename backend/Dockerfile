@@ -1,12 +1,23 @@
-# Backend Dockerfile for NestJS + TypeORM
-FROM node:20-alpine
+# Use official Node.js image
+FROM node:20
+
+# Set working directory
 WORKDIR /app
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
-RUN npm install --production
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
 COPY . .
-ENV NODE_ENV=production
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
+
+# Build the NestJS app
+RUN npm run build
+
+# Expose the port your app runs on
 EXPOSE 3001
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD wget --spider http://localhost:3001/health || exit 1
-CMD ["npm", "run", "start"]
+
+# Start the app
+CMD ["node", "dist/main.js"]
