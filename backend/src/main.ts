@@ -5,13 +5,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Enable CORS for Vercel frontend URLs
+  // Enable CORS for production deployment
   app.enableCors({
-    origin: [
-      "https://quiz-hsqc5dats-mishal-saleems-projects.vercel.app",
-      "https://quiz-nich5ul7r-mishal-saleems-projects.vercel.app"
-    ],
+    origin: ['http://localhost:3000', 'https://quiz-fs-two.vercel.app'], // Allow localhost and Vercel domains
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   });
   
   // Enable validation for DTOs
