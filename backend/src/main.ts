@@ -5,9 +5,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Enable CORS (but frontend is NOT connected - this is for future testing only)
+  // Enable CORS for Vercel frontend URLs
   app.enableCors({
-    origin: '*', // Allow all origins for API testing
+    origin: [
+      "https://quiz-hsqc5dats-mishal-saleems-projects.vercel.app",
+      "https://quiz-nich5ul7r-mishal-saleems-projects.vercel.app"
+    ],
     credentials: true,
   });
   
